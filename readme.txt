@@ -1,0 +1,1 @@
+this is just my personal archlinux install script.
