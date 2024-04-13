@@ -28,7 +28,7 @@ mkfs.ext4 /dev/sda2
 mount /dev/sda2 /mnt
 mount /dev/sda1 /mnt/boot --mkdir
 
-pacstrap /mnt base linux linux-firmware networkmanager
+pacstrap /mnt base linux linux-firmware sudo networkmanager coreutils
 
 genfstab -U /mnt > /mnt/etc/fstab
 
@@ -37,6 +37,8 @@ printf "Install complete, system now mounted at /mnt.\n\n"
 printf "/dev/sda2 mounted at /mnt\n"
 printf "/dev/sda1 mounted at /mnt/boot\n"
 
-printf "do the command : arch-chroot /mnt.\n"
+printf "do the setup...\n"
 
-printf "\n"
+cp setup /mnt
+
+arch-chroot /mnt /mnt/setup
