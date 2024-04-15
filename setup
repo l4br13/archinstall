@@ -2,11 +2,15 @@
 bootctl install
 printf "default linux.conf\neditor 0\ntimeout 0" > /boot/loader/loader.conf
 printf "title Linux\nlinux /vmlinuz-linux\ninitrd /initramfs-linux.img\noptions root=/dev/sda2 rw quiet loglevel=3" > /boot/loader/entries/linux.conf
-sed 's/HOOKS=(base udev/HOOKS=(base systemd/' /etc/mkinitcpio.conf
+sed -i 's/HOOKS=(base udev/HOOKS=(base systemd/' /etc/mkinitcpio.conf
 mkinitcpio -P
 read -p "username : " user
 useradd -m $user
 usermod -aG wheel $user
 passwd -d $user
-sed 's/#%wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
+echo "arch" > /etc/hostname
+echo "en_US.UTF-8 UTF8" > /etc/locale.gen
+echo "LANG='en_US.UTF-8'" > /etc/locale.conf
+locale-gen
 rm /setup

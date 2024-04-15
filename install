@@ -41,4 +41,8 @@ printf "do the setup...\n"
 
 cp setup /mnt
 
-arch-chroot /mnt /mnt/setup
+arch-chroot /mnt /setup
+
+umount -R /mnt
+
+printf "done.\n"
