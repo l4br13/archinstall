@@ -28,7 +28,7 @@ mkfs.ext4 /dev/sda2
 mount /dev/sda2 /mnt
 mount /dev/sda1 /mnt/boot --mkdir
 
-printf "Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch" > /etc/pacman.d/mirrorlist
+printf 'Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch' > /etc/pacman.d/mirrorlist
 sed -i 's/#Color/Color/' /etc/pacman.conf
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 20/' /etc/pacman.conf
 pacstrap /mnt base linux linux-firmware sudo networkmanager coreutils
