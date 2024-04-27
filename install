@@ -1,17 +1,19 @@
 #!/bin/sh
-
+clear
 printf "Arch Linux Installer\n"
 
 printf "\n"
 
-printf "! this process will delete entire of your disk.\n"
+printf "! This process will delete entire of your disk.\n"
 
-read -p "are you sure (y/n) : " confirm
+read -p "Are you sure (y/n) : " confirm
 
 if [ "$confirm" != "y" ]; then
 	printf "Install aborted.\n"
 	exit 1
 fi
+
+clear
 
 printf "Here we go...!\n"
 
@@ -28,6 +30,10 @@ mkfs.ext4 /dev/sda2
 mount /dev/sda2 /mnt
 mount /dev/sda1 /mnt/boot --mkdir
 
+clear
+
+printf "Deploying system...\n"
+
 printf 'Server = https://geo.mirror.pkgbuild.com/$repo/os/$arch' > /etc/pacman.d/mirrorlist
 sed -i 's/#Color/Color/' /etc/pacman.conf
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 20/' /etc/pacman.conf
@@ -35,10 +41,12 @@ pacstrap /mnt base linux linux-firmware sudo networkmanager coreutils
 
 genfstab -U /mnt > /mnt/etc/fstab
 
-printf "Install complete, system now mounted at /mnt.\n\n"
+printf "Deploy complete, system now mounted at /mnt.\n\n"
 
 printf "/dev/sda2 mounted at /mnt\n"
 printf "/dev/sda1 mounted at /mnt/boot\n"
+
+clear
 
 printf "do the setup...\n"
 
@@ -49,4 +57,9 @@ arch-chroot /mnt /setup
 
 umount -R /mnt
 
-printf "done.\n"
+printf "/mnt unmounted\n"
+
+printf "! for / partition is on /dev/sda2\n"
+printf "! for /boot partition is on /dev/sda1\n"
+
+printf "install done. you now can reboot to system\n"
